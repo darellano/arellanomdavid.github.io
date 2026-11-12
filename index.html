@@ -4,27 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Redireccionando...</title>
-	<meta property="og:type" content="website">
-    <meta property="og:title" content="Mi página">
-    <meta property="og:description" content="Ingresa aquí para acceder a nuestro sitio.">
-    <meta property="og:url" content="https://arellanomdavid.github.io/">
-    <meta property="og:image" content="https://arellanomdavid.github.io/preview.png">
-
-    <meta name="description" content="Mi página web">
 </head>
 <body>
-    <p>Abriendo página...</p>
+
+    <p id="mensaje">Redireccionando al sitio de Scotiabank...</p>
 
     <script>
-	const url = "https://banco.scotiabank.cl/mfe/clsales/mfe-onboarding-unico-wpub/?utm_source=whatsapp&utm_medium=link&utm_campaign=wa-banking";
-         window.location.href =
-                "intent://banco.scotiabank.cl/mfe/clsales/mfe-onboarding-unico-wpub/?utm_source=whatsapp&utm_medium=link&utm_campaign=wa-banking#Intent;" +
-                "scheme=https;" +
-                "package=com.android.chrome;" +
-                "S.browser_fallback_url=" +
-                encodeURIComponent(url) +
-                ";end;";
+        (function () {
+
+            const destino = "https://banco.scotiabank.cl/mfe/clsales/mfe-onboarding-unico-wpub/?utm_source=whatsapp&utm_medium=link&utm_campaign=wa-banking";
+
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+            const esAndroid = /Android/i.test(ua);
+
+            const esIOS =
+                /iPhone|iPad|iPod/i.test(ua) ||
+                (navigator.platform === "MacIntel" &&
+                 navigator.maxTouchPoints > 1);
+
+            if (esAndroid) {
+
+                document.getElementById("mensaje").textContent =
+                    "Abriendo en Chrome...";
+
+                const intent =
+                    "intent://banco.scotiabank.cl/mfe/clsales/mfe-onboarding-unico-wpub/?utm_source=whatsapp&utm_medium=link&utm_campaign=wa-banking" +
+                    "#Intent;" +
+                    "scheme=https;" +
+                    "package=com.android.chrome;" +
+                    "S.browser_fallback_url=" +
+                    encodeURIComponent(destino) +
+                    ";end;";
+
+                window.location.href = intent;
+
+            } else {
+
+                document.getElementById("mensaje").textContent =
+                    "Abriendo sitio...";
+
+                window.location.href =
+            destino.replace("https://", "x-safari-https://");
+
+            }
+
+        })();
     </script>
+
 </body>
 </html>
